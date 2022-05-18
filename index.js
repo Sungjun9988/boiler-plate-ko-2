@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const port = 4000
 
+const {auth} = require('./middleware/auth');
+
 const cookieParser = require('cookie-parser')
 
 const bodyParser = require('body-parser')
@@ -27,7 +29,7 @@ app.get('/', (req, res) => {
   res.send('다시합니다..ㅠㅠ nodemon')
 })
 
-app.post('/register', (req, res) => {
+app.post('/api/users/register', (req, res) => {
 
 
     const user = new User(req.body)
@@ -41,7 +43,7 @@ app.post('/register', (req, res) => {
   })
   
 
-app.post('/login', (req,res) =>{
+app.post('/api/users/login', (req,res) =>{
 
 
     User.findOne({ email: req.body.email }, (err, user) => {
@@ -69,6 +71,22 @@ app.post('/login', (req,res) =>{
     })
   })
 
+app.get('/api/users/auth', auth ,(req,res) => {
+    app.get('/api/users/auth', auth, (req, res) => {
+        
+        res.status(200).json({
+          _id: req.user._id,
+          isAdmin: req.user.role === 0 ? false : true,
+          isAuth: true,
+          email: req.user.email,
+          name: req.user.name,
+          lastname: req.user.lastname,
+          role: req.user.role,
+          image: req.user.image
+        })
+      })
+      
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
