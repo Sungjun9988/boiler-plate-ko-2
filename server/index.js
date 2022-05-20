@@ -29,6 +29,10 @@ app.get('/', (req, res) => {
   res.send('다시합니다..ㅠㅠ nodemon')
 })
 
+app.get('/api/hello', (req,res) =>{
+  res.send('다시한다고 ㅋㅋ')
+})
+
 app.post('/api/users/register', (req, res) => {
 
 
