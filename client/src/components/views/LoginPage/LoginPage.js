@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 function LoginPage() {
-  const navigate = useNavigate();
+  let navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [Email, setEmail] = useState("")
@@ -32,6 +32,7 @@ function LoginPage() {
 
     dispatch(loginUser(body))
       .then(response => {
+        console.log(response)
         if (response.payload.loginSuccess) {
           navigate('/');
 
@@ -62,7 +63,7 @@ function LoginPage() {
 
         <br />
         <button type='submit'>
-          Login
+          로그인
         </button>
       </form>
     </div>
